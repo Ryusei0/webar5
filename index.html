@@ -1,53 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <title>3D Model Animation with Three.js</title>
+    <meta charset="UTF-8">
+    <title>GLTF Model with Three.js</title>
     <style>
         body { margin: 0; }
         canvas { display: block; }
     </style>
 </head>
 <body>
-    <script type="module">
-        // THREE.jsのコアライブラリとGLTFLoaderモジュールをインポート
-        import * as THREE from 'https://unpkg.com/three@latest/build/three.module.js';
-        import { GLTFLoader } from 'https://unpkg.com/three@latest/examples/jsm/loaders/GLTFLoader.js';
-
-        // シーンを作成
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+        // シーンの作成
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xffffff);
 
-        // カメラを作成
+        // カメラの設定
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0, 5);
+        camera.position.z = 2;
 
-        // レンダラーを作成
+        // レンダラーの設定
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // 照明を追加
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(0, 1, 1);
-        scene.add(directionalLight);
+        // ライトの追加
+        const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+        scene.add(light);
 
-        // GLTFLoaderを使って3Dモデルを読み込む
-        const loader = new GLTFLoader();
+        // GLTFモデルの読み込み
+        const loader = new THREE.GLTFLoader();
         loader.load('https://s3.ap-northeast-3.amazonaws.com/testunity1.0/webar/test.gltf', function(gltf) {
             scene.add(gltf.scene);
-            // レンダリングループを開始
-            animate();
         }, undefined, function(error) {
-            console.error('An error happened:', error);
+            console.error(error);
         });
 
-        // アニメーション関数
+        // レンダリング関数
         function animate() {
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         }
+        animate();
     </script>
 </body>
 </html>
