@@ -85,19 +85,64 @@ button:hover {
         padding: 8px;
     }
 
-    #userInput {
-        margin-right: 8px;
-        padding: 8px;
-    }
-
-    button {
+    #userInput, button {
         padding: 8px 16px;
     }
+
+    .card-slider {
+        padding: 10px;
+        gap: 10px; /* カード間の隙間をスマホでは少し狭くする */
+    }
+
+    .card {
+        width: 150px; /* スマホではカードのサイズを小さくする */
+    }
+
+    #videoSliderContainer {
+        top: auto; /* スマホでは位置調整を変更する場合がある */
+        bottom: 70px; /* 入力コンテナと重ならないように調整 */
+        transform: translateY(0); /* 中央配置から変更する場合 */
+    }
 }
+
 
 #videoButtons {
     position: absolute; /* z-indexを適用するためには、positionがstatic以外である必要があります */
     z-index: 999; /* 高い値を設定して前面に表示 */
     top: 10px; /* 画面の上部からの位置 */
     left: 10px; /* 画面の左側からの位置 */
+}
+
+
+#videoSliderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    top: 50%; /* 画面の中央に配置 */
+    transform: translateY(-50%);
+    z-index: 10; /* 必要に応じて調整 */
+}
+
+.card-slider {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+    gap: 20px; /* カード間の隙間 */
+    align-items: center;
+}
+
+.card {
+    flex: none;
+    width: 200px; /* カードの幅 */
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background: #fff;
+}
+
+.card-slider::-webkit-scrollbar {
+    display: none;
 }

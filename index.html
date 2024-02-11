@@ -19,7 +19,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="videoButtons"></div> <!-- 動画ボタンを追加するコンテナ -->
+    <div id="videoSliderContainer">
+        <div class="card-slider" id="videoButtons"></div> <!-- 動画ボタンを追加するコンテナ -->
+    </div>    
+    <video id="my-video" controls style="display:none;">
+        <source type="video/mp4">
+        お使いのブラウザはビデオタグをサポートしていません。
+    </video>
 
     <div id="inputContainer">
         <input type="text" id="userInput" placeholder="テキストを入力...">
@@ -119,18 +125,15 @@
         var videoContainer = document.getElementById('videoButtons');
 
         videos.forEach(function(video, index) {
-            var button = document.createElement('button');
-            button.textContent = video.name; // ボタンに動画の名前を設定
-            button.onclick = function() {
-                changeVideo(video.url); // ボタンをクリックした時に動画を変更
+            var card = document.createElement('div');
+            card.className = 'card';
+            card.textContent = video.name; // ボタンに動画の名前を設定
+            card.onclick = function() {
+                changeVideo(video.url); // カードをクリックした時に動画を変更
+                document.getElementById('my-video').style.display = 'block'; // ビデオを表示
             };
-            videoContainer.appendChild(button); // 生成したボタンをコンテナに追加
+            videoContainer.appendChild(card); // 生成したカードをコンテナに追加
         });
-
-        window.onload = function() {
-        // 最初の動画を自動的に読み込む
-        changeVideo(videos[0].url);
-        };
 
         function changeVideo(url) {
             var video = document.getElementById('my-video');
