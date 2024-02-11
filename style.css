@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* 入力コンテナのスタイル */
+#inputContainer {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: calc(100% - 40px); /* 画面幅に応じて最大幅を設定 */
+}
+
+/* テキスト入力フィールドのスタイル */
+#userInput {
+    flex: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+}
+
+/* 送信ボタンのスタイル */
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* 返答コンテナのスタイル */
+#responseContainer {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none; /* 初期状態では非表示 */
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: calc(100% - 40px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+    z-index: 999;
+}
+
+/* 返答表示/非表示切り替えボタンのスタイル */
+#toggleResponse {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000; /* 必ず最前面に */
+}
+
+#toggleResponse:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    /* スマホ表示のためのスタイル調整 */
+    #inputContainer, #responseContainer {
+        max-width: calc(100% - 20px);
+        padding: 8px;
+    }
+
+    #userInput {
+        margin-right: 8px;
+        padding: 8px;
+    }
+
+    button {
+        padding: 8px 16px;
+    }
+}
+
+#videoButtons {
+    position: absolute; /* z-indexを適用するためには、positionがstatic以外である必要があります */
+    z-index: 999; /* 高い値を設定して前面に表示 */
+    top: 10px; /* 画面の上部からの位置 */
+    left: 10px; /* 画面の左側からの位置 */
+}
