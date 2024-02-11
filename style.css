@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    overflow: hidden;
+      /* overflow: hidden;   */
     font-family: Arial, sans-serif;
     -webkit-text-size-adjust: 100%; /* 横向きモードでのフォントスケーリングを防ぐ */
 }
@@ -112,41 +112,32 @@ button:hover {
     align-items: center;
     width: 100%;
     position: fixed;
-    top: 50%; /* 画面の中央に配置 */
-    transform: translateY(-50%);
-    z-index: 10; /* 必要に応じて調整 */
     left: 0;
     right: 0;
-    bottom: 70px; /* レイアウトに基づいて調整 */
-    top: auto;
-    transform: translateY(0);
+    bottom: 70px; /* 必要に応じて位置を調整 */
+    z-index: 10; /* 必要に応じて調整 */
     padding: 0 10px; /* コンテンツが画面端に触れないようにパディングを追加 */
 }
 
 .card-slider {
     display: flex;
-    overflow: hidden;
+    overflow-x: auto; /* 水平スクロールを許可 */
     white-space: nowrap;
     scroll-behavior: smooth;
-    -ms-overflow-style: none; /* IEとEdge用 */
-    scrollbar-width: none; /* Firefox用 */
 }
 
 .card-slider .card {
     display: inline-block;
-    margin-right: 10px;
+    margin: 0 10px; /* 中央揃えのために左右のマージンを均等に */
     flex: none;
-    width: 200px; /* カードの幅 */
     text-align: center;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 10px;
     background: #fff;
-    box-sizing: border-box; /* 要素の全幅にパディングとボーダーを含める */
-    width: auto; /* 幅をレスポンシブに調整 */
-    margin: 5px; /* カード間のスペースのためのマージンを調整 */
-    flex-shrink: 0; /* flexコンテナ内での縮小を防ぐ */
+    box-sizing: border-box;
 }
+
 
 .card-slider::-webkit-scrollbar {
     display: none;
