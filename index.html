@@ -16,8 +16,21 @@
             }
         }
     </script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="videoButtons"></div> <!-- 動画ボタンを追加するコンテナ -->
+
+    <div id="inputContainer">
+        <input type="text" id="userInput" placeholder="テキストを入力...">
+        <button onclick="sendInput()">送信</button>
+    </div>
+
+    <div id="responseContainer">応答がここに表示されます。</div>
+
+    <button id="toggleResponse" onclick="toggleResponse()">返答を表示</button>
+
+
     <script type="module">
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -96,6 +109,70 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
+       
+        var videos = [
+            { name: "ビデオ1", url: "https://s3.ap-northeast-3.amazonaws.com/testunity1.0/videos/1.mp4" },
+            { name: "ビデオ2", url: "https://s3.ap-northeast-3.amazonaws.com/testunity1.0/videos/2.mp4" },
+            // 他の動画をここに追加
+        ];
+
+        var videoContainer = document.getElementById('videoButtons');
+
+        videos.forEach(function(video, index) {
+            var button = document.createElement('button');
+            button.textContent = video.name; // ボタンに動画の名前を設定
+            button.onclick = function() {
+                changeVideo(video.url); // ボタンをクリックした時に動画を変更
+            };
+            videoContainer.appendChild(button); // 生成したボタンをコンテナに追加
+        });
+
+        window.onload = function() {
+        // 最初の動画を自動的に読み込む
+        changeVideo(videos[0].url);
+        };
+
+        function changeVideo(url) {
+            var video = document.getElementById('my-video');
+            video.src = url; // 動画ソースを更新
+            video.load(); // 新しいソースで動画を再読み込み
+            video.play(); // 自動再生
+        }
+
+        function sendInput() {
+            var userInput = document.getElementById('userInput').value;
+            var responseContainer = document.getElementById('responseContainer');
+
+            fetch('https://webchat-yghl.onrender.com/submit-query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({input_text: userInput})
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                responseContainer.textContent = '応答: ' + data.response; // 応答をページに表示
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                responseContainer.textContent = 'エラーが発生しました。'; // エラーをページに表示
+            });
+        }
+
+        function toggleResponse() {
+        var responseContainer = document.getElementById('responseContainer');
+        var toggleButton = document.getElementById('toggleResponse');
+        if (responseContainer.style.display === 'none') {
+            responseContainer.style.display = 'block';
+            toggleButton.textContent = '返答を隠す';
+        } else {
+            responseContainer.style.display = 'none';
+            toggleButton.textContent = '返答を表示';
+        }
+        }
+
     </script>
 </body>
 </html>
