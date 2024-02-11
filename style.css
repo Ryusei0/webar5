@@ -127,13 +127,14 @@ button:hover {
 
 .card-slider {
     display: flex;
-    overflow-x: auto;
-    padding: 20px;
-    gap: 20px; /* カード間の隙間 */
-    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
 }
 
-.card {
+card-slider .card {
+    display: inline-block;
+    margin-right: 10px;
     flex: none;
     width: 200px; /* カードの幅 */
     text-align: center;
@@ -145,4 +146,8 @@ button:hover {
 
 .card-slider::-webkit-scrollbar {
     display: none;
+}
+
+#slideLeft, #slideRight {
+    cursor: pointer;
 }
