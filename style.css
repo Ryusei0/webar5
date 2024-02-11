@@ -2,8 +2,14 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: Arial, sans-serif;
+    -webkit-text-size-adjust: 100%; /* 横向きモードでのフォントスケーリングを防ぐ */
 }
 
+/* 要素が画面幅を超えないようにする */
+html, body, #videoSliderContainer {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
 /* 入力コンテナのスタイル */
 #inputContainer {
     position: fixed;
@@ -19,6 +25,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: calc(100% - 40px); /* 画面幅に応じて最大幅を設定 */
+    box-sizing: border-box; /* 要素の全幅にパディングとボーダーを含める */
 }
 
 /* テキスト入力フィールドのスタイル */
@@ -38,6 +45,8 @@ button {
     color: #ffffff;
     border-radius: 15px;
     cursor: pointer;
+    min-width: 44px; /* タップターゲットがモバイルで十分な大きさになるようにする */
+    min-height: 44px; /* タップターゲットがモバイルで十分な大きさになるようにする */
 }
 
 button:hover {
@@ -78,6 +87,79 @@ button:hover {
     background-color: #0056b3;
 }
 
+
+#videoButtons {
+    position: absolute; /* z-indexを適用するためには、positionがstatic以外である必要があります */
+    z-index: 999; /* 高い値を設定して前面に表示 */
+    top: 10px; /* 画面の上部からの位置 */
+    left: 10px; /* 画面の左側からの位置 */
+}
+
+
+#videoSliderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    top: 50%; /* 画面の中央に配置 */
+    transform: translateY(-50%);
+    z-index: 10; /* 必要に応じて調整 */
+    left: 0;
+    right: 0;
+    bottom: 70px; /* レイアウトに基づいて調整 */
+    top: auto;
+    transform: translateY(0);
+    padding: 0 10px; /* コンテンツが画面端に触れないようにパディングを追加 */
+}
+
+.card-slider {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IEとEdge用 */
+    scrollbar-width: none; /* Firefox用 */
+}
+
+card-slider .card {
+    display: inline-block;
+    margin-right: 10px;
+    flex: none;
+    width: 200px; /* カードの幅 */
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background: #fff;
+    box-sizing: border-box; /* 要素の全幅にパディングとボーダーを含める */
+    width: auto; /* 幅をレスポンシブに調整 */
+    margin: 5px; /* カード間のスペースのためのマージンを調整 */
+    flex-shrink: 0; /* flexコンテナ内での縮小を防ぐ */
+}
+
+.card-slider::-webkit-scrollbar {
+    display: none;
+}
+
+#slideLeft, #slideRight {
+    cursor: pointer;
+}
+
+/* iOS Safariで、キーボードを閉じた後にビューポートが縮小するのを防ぐ */
+input,
+textarea,
+select {
+    font-size: 16px; /* iOSでのフォーカス時のズームを防ぐ */
+}
+
+/* 横向き時の調整 */
+@media (orientation: landscape) {
+    #videoSliderContainer {
+        bottom: 20px; /* レイアウトに基づいて調整 */
+    }
+}
+
 @media (max-width: 768px) {
     /* スマホ表示のためのスタイル調整 */
     #inputContainer, #responseContainer {
@@ -103,51 +185,4 @@ button:hover {
         bottom: 70px; /* 入力コンテナと重ならないように調整 */
         transform: translateY(0); /* 中央配置から変更する場合 */
     }
-}
-
-
-#videoButtons {
-    position: absolute; /* z-indexを適用するためには、positionがstatic以外である必要があります */
-    z-index: 999; /* 高い値を設定して前面に表示 */
-    top: 10px; /* 画面の上部からの位置 */
-    left: 10px; /* 画面の左側からの位置 */
-}
-
-
-#videoSliderContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    position: fixed;
-    top: 50%; /* 画面の中央に配置 */
-    transform: translateY(-50%);
-    z-index: 10; /* 必要に応じて調整 */
-}
-
-.card-slider {
-    display: flex;
-    overflow: hidden;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-}
-
-card-slider .card {
-    display: inline-block;
-    margin-right: 10px;
-    flex: none;
-    width: 200px; /* カードの幅 */
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    background: #fff;
-}
-
-.card-slider::-webkit-scrollbar {
-    display: none;
-}
-
-#slideLeft, #slideRight {
-    cursor: pointer;
 }
