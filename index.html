@@ -9,9 +9,12 @@
     </style>
 </head>
 <body>
-    <script src="https://threejs.org/build/three.js"></script>
-    <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
-    <script>
+    <script type="module">
+        // Three.jsのコアモジュールをインポート
+        import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+        // GLTFLoaderモジュールをインポート
+        import { GLTFLoader } from 'https://unpkg.com/three/examples/jsm/loaders/GLTFLoader.js';
+
         // シーンの作成
         const scene = new THREE.Scene();
 
@@ -29,7 +32,7 @@
         scene.add(light);
 
         // GLTFモデルの読み込み
-        const loader = new THREE.GLTFLoader();
+        const loader = new GLTFLoader();
         loader.load('https://s3.ap-northeast-3.amazonaws.com/testunity1.0/webar/test.gltf', function(gltf) {
             scene.add(gltf.scene);
         }, undefined, function(error) {
@@ -45,6 +48,3 @@
     </script>
 </body>
 </html>
-
-
-
