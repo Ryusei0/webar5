@@ -132,7 +132,7 @@ button:hover {
     scrollbar-width: none; /* Firefox用 */
 }
 
-card-slider .card {
+.card-slider .card {
     display: inline-block;
     margin-right: 10px;
     flex: none;
