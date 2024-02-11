@@ -51,17 +51,14 @@
 
 // ビューポートをリセットする関数
 function resetViewport() {
-    // ビューポートのメタタグを取得または作成
-    let viewportMeta = document.querySelector("meta[name=viewport]");
-    if (!viewportMeta) {
-        viewportMeta = document.createElement("meta");
-        viewportMeta.name = "viewport";
-        document.getElementsByTagName("head")[0].appendChild(viewportMeta);
-    }
-
-    // ビューポートの設定をリセット
-    viewportMeta.setAttribute("content", "width=device-width, initial-scale=1.0");
-}
+            let viewportMeta = document.querySelector("meta[name=viewport]");
+            if (!viewportMeta) {
+                viewportMeta = document.createElement("meta");
+                viewportMeta.name = "viewport";
+                document.getElementsByTagName("head")[0].appendChild(viewportMeta);
+            }
+            viewportMeta.setAttribute("content", "width=device-width, initial-scale=1.0");
+        }
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -182,19 +179,32 @@ function resetViewport() {
     document.getElementById('closeVideo').style.display = 'block'; // 動画を閉じるボタンを表示
 }
 
-// 動画を閉じて3Dシーンに戻る関数
-function closeVideo() {
-    var video = document.getElementById('my-video');
-    video.pause(); // 動画の再生を停止
-    video.currentTime = 0; // 動画の再生位置をリセット
-    video.style.display = 'none'; // 動画を非表示にする
-    document.getElementById('closeVideo').style.display = 'none'; // 動画を閉じるボタンを非表示にする
-    
-    // 必要に応じて3Dシーンの表示を更新またはリセットする処理をここに追加
-}
+// 動画再生時と終了時のレイアウトのリセットを行う関数
+        function resetLayout() {
+            resetViewport(); // ビューポートのリセット
 
-// 動画が終了した時の処理
-document.getElementById('my-video').addEventListener('ended', closeVideo);
+            const video = document.getElementById('my-video');
+            video.style.width = '100%';
+            video.style.height = 'auto';
+            video.style.maxHeight = '100vh';
+        }
+
+        // 動画を閉じた時にレイアウトをリセットする
+        function closeVideo() {
+            var video = document.getElementById('my-video');
+            video.pause();
+            video.currentTime = 0;
+            video.style.display = 'none';
+            document.getElementById('closeVideo').style.display = 'none';
+
+            resetLayout();
+        }
+
+        // 動画が終了した時にもレイアウトをリセットする
+        document.getElementById('my-video').addEventListener('ended', function() {
+            closeVideo();
+            resetLayout();
+        });
 
         function sendInput() {
            var userInput = document.getElementById('userInput').value;

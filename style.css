@@ -5,6 +5,16 @@ body {
     -webkit-text-size-adjust: 100%; /* 横向きモードでのフォントスケーリングを防ぐ */
 }
 
+#my-video {
+    width: 100%; /* ビデオの幅を画面幅に合わせる */
+    max-height: 100vh; /* ビデオの高さが画面を超えないようにする */
+    position: fixed; /* 動画を画面上に固定 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 中心に配置 */
+    z-index: 1001; /* 必要に応じて調整 */
+}
+
 /* 要素が画面幅を超えないようにする */
 html, body, #videoSliderContainer {
     max-width: 100vw;
@@ -142,8 +152,21 @@ card-slider .card {
     display: none;
 }
 
+/* スライダーのコントロールボタンのスタイル */
 #slideLeft, #slideRight {
-    cursor: pointer;
+    position: fixed;
+    top: 50%; /* 画面の中央の高さに配置 */
+    transform: translateY(-50%); /* 垂直方向の中心に配置 */
+    z-index: 1002; /* 動画よりも上に表示 */
+}
+
+
+#slideLeft {
+    left: 10px; /* 画面の左端から少し離す */
+}
+
+#slideRight {
+    right: 10px; /* 画面の右端から少し離す */
 }
 
 /* iOS Safariで、キーボードを閉じた後にビューポートが縮小するのを防ぐ */
@@ -161,6 +184,12 @@ select {
 }
 
 @media (max-width: 768px) {
+
+    #my-video {
+        width: 100vw; /* ビューポートの幅に合わせる */
+        height: auto; /* 高さを自動調整 */
+        max-height: 50vh; /* 画面の50%の高さに制限 */
+    }
     /* スマホ表示のためのスタイル調整 */
     #inputContainer, #responseContainer {
         max-width: calc(100% - 20px);
@@ -184,5 +213,10 @@ select {
         top: auto; /* スマホでは位置調整を変更する場合がある */
         bottom: 70px; /* 入力コンテナと重ならないように調整 */
         transform: translateY(0); /* 中央配置から変更する場合 */
+    }
+
+    #slideLeft, #slideRight {
+        top: auto; /* 位置を自動で調整する */
+        bottom: 100px; /* 下からの位置 */
     }
 }
