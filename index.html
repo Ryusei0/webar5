@@ -34,13 +34,12 @@
 
     <div id="inputContainer">
         <input type="text" id="userInput" placeholder="テキストを入力...">
-
+        <button onclick="sendInput()">送信</button>
     </div>
 
     <div id="responseContainer">応答がここに表示されます。</div>
 
     <button id="sendInputButton">送信</button>
-    <button id="toggleResponse">返答を表示</button>
     <button id="closeVideo" style="display:none;">動画を閉じる</button>
     
 
@@ -135,21 +134,7 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-// ここからイベントリスナーを登録するためのDOMContentLoadedイベント
-document.addEventListener('DOMContentLoaded', (event) => {
-    const videoButtons = document.getElementById('videoButtons');
-    const slideLeft = document.getElementById('slideLeft');
-    const slideRight = document.getElementById('slideRight');
-
-    slideRight.addEventListener('click', () => {
-        videoButtons.scrollBy({ left: 200, behavior: 'smooth' });
-    });
-
-    slideLeft.addEventListener('click', () => {
-        videoButtons.scrollBy({ left: -200, behavior: 'smooth' });
-    });
-
-    const videos = [
+const videos = [
             { name: "ビデオ1", url: "https://s3.ap-northeast-3.amazonaws.com/testunity1.0/videos/1.mp4" },
             { name: "ビデオ2", url: "https://s3.ap-northeast-3.amazonaws.com/testunity1.0/videos/2.mp4" },
             { name: "ビデオ0", url: "https://s3.ap-northeast-3.amazonaws.com/testunity1.0/videos/0.mp4" },
@@ -170,17 +155,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             videoContainer.appendChild(card); // 生成したカードをコンテナに追加
         });
 
-        window.changeVideo = changeVideo;
-            window.closeVideo = closeVideo;
-            window.sendInput = sendInput;
-            window.toggleResponse = toggleResponse;
-
-            // イベントリスナーを追加
-            document.getElementById('sendButton').addEventListener('click', sendInput);
-            document.getElementById('toggleButton').addEventListener('click', toggleResponse);
-            document.getElementById('closeVideoButton').addEventListener('click', closeVideo);
-       
-});
+// ここからイベントリスナーを登録するためのDOMContentLoadedイベント
 
         function changeVideo(url) {
     var video = document.getElementById('my-video');
