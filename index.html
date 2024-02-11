@@ -45,111 +45,109 @@
 
     <script type="module">
         import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-        import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 // ビューポートをリセットする関数
 function resetViewport() {
-            let viewportMeta = document.querySelector("meta[name=viewport]");
-            if (!viewportMeta) {
-                viewportMeta = document.createElement("meta");
-                viewportMeta.name = "viewport";
-                document.getElementsByTagName("head")[0].appendChild(viewportMeta);
-            }
-            viewportMeta.setAttribute("content", "width=device-width, initial-scale=1.0");
-        }
+    let viewportMeta = document.querySelector("meta[name=viewport]");
+    if (!viewportMeta) {
+        viewportMeta = document.createElement("meta");
+        viewportMeta.name = "viewport";
+        document.getElementsByTagName("head")[0].appendChild(viewportMeta);
+    }
+    viewportMeta.setAttribute("content", "width=device-width, initial-scale=1.0");
+}
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 8, 8);
-        camera.lookAt(new THREE.Vector3(0, 8, 0)); 
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 8, 8);
+camera.lookAt(new THREE.Vector3(0, 8, 0)); 
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0xffffff);
-        renderer.shadowMap.enabled = true;
-        document.body.appendChild(renderer.domElement);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0xffffff);
+renderer.shadowMap.enabled = true;
+document.body.appendChild(renderer.domElement);
 
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.zoomSpeed = 0.5;
-        controls.update();
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.zoomSpeed = 0.5;
+controls.update();
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
-        scene.add(ambientLight);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+scene.add(ambientLight);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-        directionalLight.position.set(0, 4, 1);
-        directionalLight.castShadow = true;
-        scene.add(directionalLight);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+directionalLight.position.set(0, 4, 1);
+directionalLight.castShadow = true;
+scene.add(directionalLight);
 
-        const planeGeometry = new THREE.PlaneGeometry(20, 20);
-        const planeMaterial = new THREE.ShadowMaterial({ opacity: 0.5 });
-        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-        plane.rotation.x = -Math.PI / 2;
-        plane.position.y = -1;
-        plane.receiveShadow = true;
-        scene.add(plane);
+const planeGeometry = new THREE.PlaneGeometry(20, 20);
+const planeMaterial = new THREE.ShadowMaterial({ opacity: 0.5 });
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+plane.rotation.x = -Math.PI / 2;
+plane.position.y = -1;
+plane.receiveShadow = true;
+scene.add(plane);
 
-        const loader = new GLTFLoader();
-        const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.1/');
-        loader.setDRACOLoader(dracoLoader);
+const loader = new GLTFLoader();
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.1/');
+loader.setDRACOLoader(dracoLoader);
 
-        let mixer;
+let mixer;
 
-        loader.load('https://s3.ap-northeast-3.amazonaws.com/testunity1.0/webar/nMstandbaked.gltf', function (gltf) {
-            scene.add(gltf.scene);
-            gltf.scene.scale.set(0.05, 0.05, 0.05);
-            gltf.scene.traverse(function (node) {
-                if (node.isMesh) { node.castShadow = true; }
-            });
-            mixer = new THREE.AnimationMixer(gltf.scene);
-            if (gltf.animations.length) {
-                gltf.animations.forEach((clip) => {
-                    mixer.clipAction(clip).play();
-                });
-            }
-        }, undefined, function (error) {
-            console.error(error);
+loader.load('https://s3.ap-northeast-3.amazonaws.com/testunity1.0/webar/nMstandbaked.gltf', function (gltf) {
+    scene.add(gltf.scene);
+    gltf.scene.scale.set(0.05, 0.05, 0.05);
+    gltf.scene.traverse(function (node) {
+        if (node.isMesh) { node.castShadow = true; }
+    });
+    mixer = new THREE.AnimationMixer(gltf.scene);
+    if (gltf.animations.length) {
+        gltf.animations.forEach((clip) => {
+            mixer.clipAction(clip).play();
         });
+    }
+}, undefined, function (error) {
+    console.error(error);
+});
 
-        const clock = new THREE.Clock();
+const clock = new THREE.Clock();
 
-        function animate() {
-            requestAnimationFrame(animate);
-            const delta = clock.getDelta();
-            if (mixer) mixer.update(delta);
-            renderer.render(scene, camera);
-        }
+function animate() {
+    requestAnimationFrame(animate);
+    const delta = clock.getDelta();
+    if (mixer) mixer.update(delta);
+    renderer.render(scene, camera);
+}
 
-        animate();
+animate();
 
-        window.addEventListener('resize', onWindowResize, false);
+window.addEventListener('resize', onWindowResize, false);
 
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
 
-        document.addEventListener('DOMContentLoaded', (event) => {
+// ここからイベントリスナーを登録するためのDOMContentLoadedイベント
+document.addEventListener('DOMContentLoaded', (event) => {
     const videoButtons = document.getElementById('videoButtons');
     const slideLeft = document.getElementById('slideLeft');
     const slideRight = document.getElementById('slideRight');
 
-    // スライド右ボタンのイベントリスナー
     slideRight.addEventListener('click', () => {
         videoButtons.scrollBy({ left: 200, behavior: 'smooth' });
     });
 
-    // スライド左ボタンのイベントリスナー
     slideLeft.addEventListener('click', () => {
         videoButtons.scrollBy({ left: -200, behavior: 'smooth' });
     });
 
-    // ビデオボタンの動的追加（例）
-    var videos = [
+    const videos = [
             { name: "ビデオ1", url: "https://s3.ap-northeast-3.amazonaws.com/testunity1.0/videos/1.mp4" },
             { name: "ビデオ2", url: "https://s3.ap-northeast-3.amazonaws.com/testunity1.0/videos/2.mp4" },
             { name: "ビデオ0", url: "https://s3.ap-northeast-3.amazonaws.com/testunity1.0/videos/0.mp4" },
@@ -169,6 +167,17 @@ function resetViewport() {
             };
             videoContainer.appendChild(card); // 生成したカードをコンテナに追加
         });
+
+        window.changeVideo = changeVideo;
+            window.closeVideo = closeVideo;
+            window.sendInput = sendInput;
+            window.toggleResponse = toggleResponse;
+
+            // イベントリスナーを追加
+            document.getElementById('sendButton').addEventListener('click', sendInput);
+            document.getElementById('toggleButton').addEventListener('click', toggleResponse);
+            document.getElementById('closeVideoButton').addEventListener('click', closeVideo);
+       
 });
 
         function changeVideo(url) {
