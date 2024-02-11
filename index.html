@@ -7,44 +7,72 @@
         body { margin: 0; }
         canvas { display: block; }
     </style>
+    <script type="importmap">
+        {
+            "imports": {
+              "three": "https://unpkg.com/three@v0.151.3/build/three.module.js",
+              "three/addons/": "https://unpkg.com/three@v0.151.3/examples/jsm/"
+            }
+         }
+    </script>
 </head>
 <body>
     <script type="module">
-        // Three.jsのコアモジュールをインポート
-        import * as THREE from 'https://unpkg.com/three/build/three.module.js';
-        // GLTFLoaderモジュールをインポート
-        import { GLTFLoader } from 'https://unpkg.com/three/examples/jsm/loaders/GLTFLoader.js';
+        // 1. Three.jsライブラリの読み込み
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
-        // シーンの作成
+        // 2. シーンを作成する
         const scene = new THREE.Scene();
 
-        // カメラの設定
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 2;
+        // 3. カメラを作成する
+        const camera = new THREE.PerspectiveCamera(
+            75, // 視野角
+            window.innerWidth / window.innerHeight, // アスペクト比
+            0.1, // ニアクリップ面
+            1000 // ファークリップ面
+        );
+        camera.position.z = 5; // カメラの位置を設定する
 
-        // レンダラーの設定
+        // 4. レンダラーを作成する
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // ライトの追加
-        const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
-        scene.add(light);
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.zoomSpeed = 0.5;
+        controls.update(); // 初期化時に一度だけ呼び出す
 
-        // GLTFモデルの読み込み
+        // AmbientLightを追加する
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(ambientLight);
+
+        // 5. GLTFLoaderを作成する
         const loader = new GLTFLoader();
-        loader.load('https://s3.ap-northeast-3.amazonaws.com/testunity1.0/webar/test.gltf', function(gltf) {
-            scene.add(gltf.scene);
-        }, undefined, function(error) {
-            console.error(error);
-        });
+        
+        const dracoLoader = new DRACOLoader(); // DRACOLoaderのインスタンスを作成
+        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.1/');
+        loader.setDRACOLoader(dracoLoader); // GLTFLoaderにDRACOLoaderのインスタンスを提供
 
-        // レンダリング関数
+        // 6. 3Dモデルのロード＆描画
+        loader.load(
+            "https://s3.ap-northeast-3.amazonaws.com/testunity1.0/webar/test.gltf",
+            function (gltf) {
+                scene.add(gltf.scene);
+            },
+            undefined,
+            function (error) {
+                console.error(error);
+            }
+        );
+
         function animate() {
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         }
         animate();
     </script>
-</body>
+  </body>
 </html>
