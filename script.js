@@ -147,10 +147,10 @@ function changeVideo(url) {
             resetLayout();
         });
 
-        function sendInput() {
+function sendInput() {
             var userInput = document.getElementById('userInput').value;
             var responseContainer = document.getElementById('responseContainer');
-
+        
             fetch('https://webchat-yghl.onrender.com/submit-query', {
                 method: 'POST',
                 headers: {
@@ -166,15 +166,18 @@ function changeVideo(url) {
             .catch((error) => {
                 console.error('Error:', error);
                 responseContainer.textContent = 'エラーが発生しました。';  // エラーをページに表示
-        })
-        .finally(() => {
-        // フォーカスを外して画面のズームをリセットする
-             document.getElementById('userInput').blur();
-
-        // 必要に応じてビューポートをリセットする
-              resetViewport();
-        });
-}
+            })
+            .finally(() => {
+                document.getElementById('userInput').value = ''; // ここでテキストボックスの内容をクリア
+        
+                // フォーカスを外して画面のズームをリセットする
+                document.getElementById('userInput').blur();
+        
+                // 必要に応じてビューポートをリセットする
+                resetViewport();
+            });
+        }
+        
 
 
         function toggleResponse() {
