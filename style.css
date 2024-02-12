@@ -116,8 +116,9 @@ button:hover {
     justify-content: center;
     align-items: center;
     padding: 0 10px;
-    width: auto; /* コンテナの幅を自動に設定 */
-    min-width: 20%; /* 最小幅を設定して、あまりにも狭くならないようにする */
+    width: 95%; /* コンテナの幅を画面の90%に設定 */
+    max-width: 960px; /* 最大幅を設定して、大きすぎないようにする */
+    min-width: 300px; /* 最小幅を設定して、小さすぎないようにする */
 }
 
 .card-slider {
@@ -150,17 +151,17 @@ button:hover {
 }
 
 #slideLeft, #slideRight {
-    position: absolute; /* flexコンテナ内での絶対位置指定 */
-    top: 50%; /* コンテナの中央の高さに配置 */
-    transform: translateY(-50%); /* 垂直方向の中心に配置 */
+    position: fixed; /* 画面に対して固定位置を指定 */
+    top: 50%; /* 画面の垂直中央に配置 */
+    transform: translateY(-50%); /* Y軸方向の中心に配置 */
 }
 
 #slideLeft {
-    left: -40px; /* コンテナの左外側に配置 */
+    left: 0; /* 画面の左端に配置 */
 }
 
 #slideRight {
-    right: -40px; /* コンテナの右外側に配置 */
+    right: 0; /* 画面の右端に配置 */
 }
 
 /* iOS Safariで、キーボードを閉じた後にビューポートが縮小するのを防ぐ */
