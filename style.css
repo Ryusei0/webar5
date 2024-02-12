@@ -108,37 +108,42 @@ button:hover {
 
 #videoSliderContainer {
     position: fixed;
-    top: 50%; /* 上から画面の中央に配置 */
-    left: 50%; /* 左から画面の中央に配置 */
-    transform: translate(-50%, -50%); /* X軸とY軸の両方で中心からずらすことで、正確に中央に配置 */
-    z-index: 100; /* 他の要素よりも前面に来るように100以上の値に設定 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
     display: flex;
-    justify-content: center; /* 中央揃え */
+    justify-content: center;
     align-items: center;
     padding: 0 10px;
+    width: auto; /* コンテナの幅を自動に設定 */
+    min-width: 20%; /* 最小幅を設定して、あまりにも狭くならないようにする */
 }
 
 .card-slider {
     display: flex;
-    justify-content: center; /* カードを中央揃えにする */
-    flex-wrap: nowrap; /* カードが折り返されないようにする */
-    overflow-x: auto; /* カードが多い場合は横スクロールを有効にする */
-    width: 100%; /* コンテナの幅を100%に設定 */
-    margin: 0 auto; /* 左右のマージンを自動で中央揃えにする */
+    flex-grow: 1; /* コンテナ内で可用なスペースを埋める */
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0 auto;
 }
 
 .card-slider .card {
     display: inline-block;
-    margin: 0 10px; /* 中央揃えのために左右のマージンを均等に */
-    flex: none;
+    margin: 0 10px;
+    flex: none; /* カードの幅をflex-basisやwidthで制御する */
     text-align: center;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 10px;
     background: #fff;
     box-sizing: border-box;
+    /* カードのデフォルト幅を設定、内容に応じて調整が必要 */
+    width: 150px;
 }
 
+/* スライドコントロールボタンはコンテナの外側にあるため、このスタイルは適用されません */
 
 .card-slider::-webkit-scrollbar {
     display: none;
