@@ -107,15 +107,15 @@ button:hover {
 
 
 #videoSliderContainer {
+    position: fixed;
+    top: 50%; /* 上から画面の中央に配置 */
+    left: 50%; /* 左から画面の中央に配置 */
+    transform: translate(-50%, -50%); /* X軸とY軸の両方で中心からずらすことで、正確に中央に配置 */
+    z-index: 100; /* 他の要素よりも前面に来るように100以上の値に設定 */
     display: flex;
     justify-content: center; /* 中央揃え */
     align-items: center;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 20px; /* 下部から20pxの位置に設定 */
     padding: 0 10px;
-    z-index: 100; /* 他の要素よりも前面に来るように100以上の値に設定 */
 }
 
 .card-slider {
@@ -144,21 +144,18 @@ button:hover {
     display: none;
 }
 
-/* スライダーのコントロールボタンのスタイル */
 #slideLeft, #slideRight {
-    position: fixed;
-    top: 50%; /* 画面の中央の高さに配置 */
+    position: absolute; /* flexコンテナ内での絶対位置指定 */
+    top: 50%; /* コンテナの中央の高さに配置 */
     transform: translateY(-50%); /* 垂直方向の中心に配置 */
-    z-index: 1002; /* 動画よりも上に表示 */
 }
 
-
 #slideLeft {
-    left: 10px; /* 画面の左端から少し離す */
+    left: -40px; /* コンテナの左外側に配置 */
 }
 
 #slideRight {
-    right: 10px; /* 画面の右端から少し離す */
+    right: -40px; /* コンテナの右外側に配置 */
 }
 
 /* iOS Safariで、キーボードを閉じた後にビューポートが縮小するのを防ぐ */
@@ -202,13 +199,25 @@ select {
     }
 
     #videoSliderContainer {
-        top: auto; /* スマホでは位置調整を変更する場合がある */
-        bottom: 70px; /* 入力コンテナと重ならないように調整 */
-        transform: translateY(0); /* 中央配置から変更する場合 */
+        bottom: 70px; /* 画面の下部から適切な距離に配置 */
+        left: 0;
+        right: 0;
+        top: auto;
+        transform: none; /* 中央配置の変更を解除 */
+        justify-content: space-between; /* ボタンをコンテナの両端に配置 */
     }
 
     #slideLeft, #slideRight {
-        top: auto; /* 位置を自動で調整する */
-        bottom: 100px; /* 下からの位置 */
+        position: absolute; /* コンテナ内の絶対位置指定 */
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #slideLeft {
+        left: 10px; /* コンテナの左端に配置 */
+    }
+
+    #slideRight {
+        right: 10px; /* コンテナの右端に配置 */
     }
 }

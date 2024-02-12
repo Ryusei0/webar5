@@ -111,7 +111,6 @@ const videos = [
             videoContainer.appendChild(button); // 生成したボタンをコンテナに追加
         });
 
-// ここからイベントリスナーを登録するためのDOMContentLoadedイベント
 
 function changeVideo(url) {
             var video = document.getElementById('my-video');
