@@ -99,67 +99,73 @@ button:hover {
 
 
 #videoButtons {
-    position: absolute; /* z-indexを適用するためには、positionがstatic以外である必要があります */
-    z-index: 999; /* 高い値を設定して前面に表示 */
-    top: 10px; /* 画面の上部からの位置 */
-    left: 10px; /* 画面の左側からの位置 */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
 }
 
 
 #videoSliderContainer {
     position: fixed;
-    bottom: 10%; /* 画面下部から10%の位置に配置 */
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     z-index: 100;
     display: flex;
-    justify-content: center; /* 子要素を中央に配置 */
+    justify-content: space-around; /* 子要素をコンテナの中で均等に分散させる */
     align-items: center;
-    width: 100%; /* コンテナの幅を画面幅いっぱいに */
-    max-width: 1200px; /* 最大幅を設定 */
-    box-sizing: border-box;
-    padding: 0 20px; /* 左右の内側余白を設定 */
+    padding: 0 10px;
+    width: 95%; /* コンテナの幅を画面の90%に設定 */
+    max-width: 960px; /* 最大幅を設定して、大きすぎないようにする */
+    min-width: 300px; /* 最小幅を設定して、小さすぎないようにする */
 }
 
 .card-slider {
     display: flex;
-    justify-content: center; /* カードを中央に配置 */
-    align-items: center;
-    flex-wrap: wrap; /* カードが多い場合に折り返すように設定 */
-    gap: 10px; /* カード間の余白を設定 */
-    width: calc(100% - 100px); /* スライドコントロールボタンのスペースを確保 */
+    flex-grow: 1; /* コンテナ内で可用なスペースを埋める */
+    display: flex;
+    justify-content: space-around; /* カードを均等に分散させる */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0 auto;
 }
 
 .card-slider .card {
-    flex: 0 0 auto; /* カードの伸縮を防ぐ */
-    width: 150px; /* カードの幅を設定 */
-    margin: 0 10px; /* カードの外側余白を設定 */
+    display: inline-block;
+    margin: 0 10px;
+    flex: none; /* カードの幅をflex-basisやwidthで制御する */
     text-align: center;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 10px;
     background: #fff;
+    box-sizing: border-box;
+    /* カードのデフォルト幅を設定、内容に応じて調整が必要 */
+    width: 150px;
+    justify-content: space-around;
 }
 
+/* スライドコントロールボタンはコンテナの外側にあるため、このスタイルは適用されません */
+
 .card-slider::-webkit-scrollbar {
-    display: none; /* スクロールバーを非表示にする */
+    display: none;
 }
 
 #slideLeft, #slideRight {
-    position: absolute; /* 画面に対して絶対位置を指定 */
-    top: 50%; /* コンテナの縦中央に配置 */
+    position: fixed; /* 画面に対して固定位置を指定 */
+    top: 50%; /* 画面の垂直中央に配置 */
     transform: translateY(-50%); /* Y軸方向の中心に配置 */
-    z-index: 101; /* スライドボタンをコンテナより上に表示 */
 }
 
 #slideLeft {
-    left: 10px; /* 画面の左端から10pxの位置に配置 */
+    left: 0; /* 画面の左端に配置 */
 }
 
 #slideRight {
-    right: 10px; /* 画面の右端から10pxの位置に配置 */
+    right: 0; /* 画面の右端に配置 */
 }
-
 
 /* iOS Safariで、キーボードを閉じた後にビューポートが縮小するのを防ぐ */
 input,
@@ -191,9 +197,10 @@ select {
     #userInput, button {
         padding: 8px 16px;
     }
-    
+
     .card-slider {
-        width: calc(100% - 40px); /* スマートフォンでは左右の余白を減らす */
+        padding: 10px;
+        gap: 10px; /* カード間の隙間をスマホでは少し狭くする */
     }
 
     .card {
@@ -210,7 +217,9 @@ select {
     }
 
     #slideLeft, #slideRight {
-        display: block; /* スマートフォンではスライドコントロールを表示 */
+        position: absolute; /* コンテナ内の絶対位置指定 */
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     #slideLeft {
