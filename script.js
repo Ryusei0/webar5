@@ -3,11 +3,10 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('sendButton').addEventListener('click', sendInput);
-    document.getElementById('toggleResponse').addEventListener('click', toggleResponse);
+document.getElementById('sendButton').addEventListener('click', sendInput);
+document.getElementById('toggleResponse').addEventListener('click', toggleResponse);
     // 他のイベントリスナーも同様に設定
-  });
+
 
 // ビューポートをリセットする関数
 function resetViewport() {
