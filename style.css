@@ -113,7 +113,7 @@ button:hover {
     transform: translate(-50%, -50%);
     z-index: 100;
     display: flex;
-    justify-content: center;
+    justify-content: space-around; /* 子要素をコンテナの中で均等に分散させる */
     align-items: center;
     padding: 0 10px;
     width: 95%; /* コンテナの幅を画面の90%に設定 */
@@ -124,7 +124,8 @@ button:hover {
 .card-slider {
     display: flex;
     flex-grow: 1; /* コンテナ内で可用なスペースを埋める */
-    justify-content: center;
+    display: flex;
+    justify-content: space-around; /* カードを均等に分散させる */
     flex-wrap: nowrap;
     overflow-x: auto;
     margin: 0 auto;
