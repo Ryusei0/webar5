@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('yourSendButtonId').addEventListener('click', sendInput);
+    document.getElementById('sendButton').addEventListener('click', sendInput);
     document.getElementById('toggleResponse').addEventListener('click', toggleResponse);
     // 他のイベントリスナーも同様に設定
   });
