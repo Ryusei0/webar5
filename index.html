@@ -19,19 +19,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="videoSliderContainer">
-        <div class="card-slider" id="videoButtons">
-            <!-- スライドボタンはJavaScriptで動的に追加されます -->
-        </div>
-        <!-- スライドコントロール -->
-        <button id="slideLeft">&lt;</button>
-        <button id="slideRight">&gt;</button>
-    </div>  
-    <video id="my-video" controls style="display:none;">
-        <source type="video/mp4">
-        お使いのブラウザはビデオタグをサポートしていません。
-    </video>
-
     <div id="inputContainer">
         <input type="text" id="userInput" placeholder="テキストを入力...">
         <button id="sendButton">送信</button>
@@ -39,7 +26,26 @@
 
     <div id="responseContainer">応答がここに表示されます。</div>
     <button id="toggleResponse">返答を表示</button>
-    <button id="closeVideo" style="display:none;">動画を閉じる</button>
+    <button id="playCenterVideo">中央のビデオを再生</button>
+    <button id="lockCameraButton">切り替え</button>
+    <div id="videoListContainer">
+        <!-- 動画リストがここに挿入されます -->
+      </div>
+      
+    <!-- ハンバーガーメニューアイコン -->
+<div class="hamburger-menu">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  
+  <!-- メニューの内容 -->
+  <div class="menu-content" id="menuContent">
+    <ul id="infoList">
+      <!-- JavaScriptで情報の一覧を動的に追加 -->
+    </ul>
+  </div>
+  
     <script src="script.js" type="module"></script>
     
 </body>

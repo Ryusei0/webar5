@@ -4,19 +4,8 @@ body {
     font-family: Arial, sans-serif;
     -webkit-text-size-adjust: 100%; /* 横向きモードでのフォントスケーリングを防ぐ */
 }
-
-#my-video {
-    width: 100%; /* ビデオの幅を画面幅に合わせる */
-    max-height: 100vh; /* ビデオの高さが画面を超えないようにする */
-    position: fixed; /* 動画を画面上に固定 */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* 中心に配置 */
-    z-index: 1001; /* 必要に応じて調整 */
-}
-
 /* 要素が画面幅を超えないようにする */
-html, body, #videoSliderContainer {
+html, body{
     max-width: 100vw;
     overflow-x: hidden;
 }
@@ -26,7 +15,7 @@ html, body, #videoSliderContainer {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 999;
+    z-index: 1000;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -97,76 +86,6 @@ button:hover {
     background-color: #0056b3;
 }
 
-
-#videoButtons {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 1200px;
-    margin: auto;
-}
-
-
-#videoSliderContainer {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    display: flex;
-    justify-content: space-around; /* 子要素をコンテナの中で均等に分散させる */
-    align-items: center;
-    padding: 0 10px;
-    width: 95%; /* コンテナの幅を画面の90%に設定 */
-    max-width: 960px; /* 最大幅を設定して、大きすぎないようにする */
-    min-width: 300px; /* 最小幅を設定して、小さすぎないようにする */
-}
-
-.card-slider {
-    display: flex;
-    flex-grow: 1; /* コンテナ内で可用なスペースを埋める */
-    display: flex;
-    justify-content: space-around; /* カードを均等に分散させる */
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    margin: 0 auto;
-}
-
-.card-slider .card {
-    display: inline-block;
-    margin: 0 10px;
-    flex: none; /* カードの幅をflex-basisやwidthで制御する */
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    background: #fff;
-    box-sizing: border-box;
-    /* カードのデフォルト幅を設定、内容に応じて調整が必要 */
-    width: 150px;
-    justify-content: space-around;
-}
-
-/* スライドコントロールボタンはコンテナの外側にあるため、このスタイルは適用されません */
-
-.card-slider::-webkit-scrollbar {
-    display: none;
-}
-
-#slideLeft, #slideRight {
-    position: fixed; /* 画面に対して固定位置を指定 */
-    top: 50%; /* 画面の垂直中央に配置 */
-    transform: translateY(-50%); /* Y軸方向の中心に配置 */
-}
-
-#slideLeft {
-    left: 0; /* 画面の左端に配置 */
-}
-
-#slideRight {
-    right: 0; /* 画面の右端に配置 */
-}
-
 /* iOS Safariで、キーボードを閉じた後にビューポートが縮小するのを防ぐ */
 input,
 textarea,
@@ -176,18 +95,10 @@ select {
 
 /* 横向き時の調整 */
 @media (orientation: landscape) {
-    #videoSliderContainer {
-        bottom: 20px; /* レイアウトに基づいて調整 */
-    }
 }
 
 @media (max-width: 768px) {
 
-    #my-video {
-        width: 100vw; /* ビューポートの幅に合わせる */
-        height: auto; /* 高さを自動調整 */
-        max-height: 50vh; /* 画面の50%の高さに制限 */
-    }
     /* スマホ表示のためのスタイル調整 */
     #inputContainer, #responseContainer {
         max-width: calc(100% - 20px);
@@ -198,35 +109,82 @@ select {
         padding: 8px 16px;
     }
 
-    .card-slider {
+}
+
+/* ハンバーガーメニューのスタイリング */
+.hamburger-menu {
+    cursor: pointer;
+    display: inline-block;
+    width: 30px;
+    height: 25px;
+    position: fixed;
+    top: 20px; /* Adjust the top position as needed */
+    left: 20px; /* Adjust the left position as needed */
+    z-index: 1001; /* Ensure it is on top of other elements */
+}
+  .bar {
+    background-color: #333;
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    transition: 0.3s ease;
+  }
+  
+  .bar:nth-child(1) { top: 0; }
+  .bar:nth-child(2) { top: 11px; }
+  .bar:nth-child(3) { top: 22px; }
+  
+  /* メニュー内容のz-indexを更新 */
+  .menu-content {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 16px 0 #f9f9f9;;
+    padding: 12px 16px;
+    z-index: 1000; 
+  }  
+  
+  /* リストアイテム */
+  #infoList li {
+    padding: 8px 0;
+    color: white;
+  }
+/* 動画カテゴリー */
+  #videoListContainer {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000; /* Make sure this is higher than other elements if necessary */
+        color: black; /* Or any color you wish */
+        text-align: center; /* Center the text within the div */
+        /* Additional styles to ensure visibility/readability */
+        background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
         padding: 10px;
-        gap: 10px; /* カード間の隙間をスマホでは少し狭くする */
-    }
+        border-radius: 5px;
+        font-size: 16px; /* Or the size you prefer */
+        font-family: 'Arial', sans-serif; /* Or the font you prefer */
+  }
 
-    .card {
-        width: 150px; /* スマホではカードのサイズを小さくする */
-    }
+  #playCenterVideo {
+    position: fixed;
+    bottom: 85px; /* Adjust the bottom position so it's above the text box */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%);
+    z-index: 999;
+    /* Rest of your styling */
+}
 
-    #videoSliderContainer {
-        bottom: 70px; /* 画面の下部から適切な距離に配置 */
-        left: 0;
-        right: 0;
-        top: auto;
-        transform: none; /* 中央配置の変更を解除 */
-        justify-content: space-between; /* ボタンをコンテナの両端に配置 */
-    }
-
-    #slideLeft, #slideRight {
-        position: absolute; /* コンテナ内の絶対位置指定 */
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    #slideLeft {
-        left: 10px; /* コンテナの左端に配置 */
-    }
-
-    #slideRight {
-        right: 10px; /* コンテナの右端に配置 */
-    }
+#lockCameraButton {
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    z-index: 999; /* Ensure it's above other elements */
+    /* Rest of your styling */
 }
